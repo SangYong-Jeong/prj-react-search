@@ -5,13 +5,20 @@ import ListImg from './List/ListImg';
 import ListBlog from './List/ListBlog';
 import ListBook from './List/ListBook';
 import ListCafe from './List/ListCafe';
+import styled from 'styled-components';
+
+const StyledLists = styled.ul`
+  border-top: 1px solid #dedede;
+  overflow-wrap: break-word;
+  z-index: 2;
+`;
 
 const List = ({ lists, category }) => {
   const { documents } = lists;
   const { current } = category;
   console.log(current);
   return (
-    <ul>
+    <StyledLists>
       {documents &&
         current === 'web' &&
         documents.map((v, i) => (
@@ -93,7 +100,7 @@ const List = ({ lists, category }) => {
             url={v.url}
           />
         ))}
-    </ul>
+    </StyledLists>
   );
 };
 
