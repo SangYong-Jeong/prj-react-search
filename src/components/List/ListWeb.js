@@ -1,15 +1,15 @@
 import React from 'react';
-import styled from 'styled-components';
+import styled, { CommonLink } from '../../style';
 import moment from 'moment';
 
-const StyledListWeb = styled.li`
+const List = styled.li`
   color: #555;
   border-bottom: 1px solid #dedede;
   margin-bottom: 1em;
   padding: 1em 0;
 `;
 
-const StyledTitle = styled.a`
+const Title = styled.a`
   font-size: 1.325em;
   color: #111111;
   margin-bottom: 1em;
@@ -17,13 +17,13 @@ const StyledTitle = styled.a`
   display: inline-block;
 `;
 
-const StyledContent = styled.p`
+const Content = styled.p`
   font-size: 1.125em;
   margin-bottom: 0.5em;
   line-height: 1.2;
 `;
 
-const StyledLink = styled.a`
+const Link = styled(CommonLink)`
   width: 100%;
   color: #155daf;
   margin-bottom: 0.5em;
@@ -31,22 +31,21 @@ const StyledLink = styled.a`
 `;
 
 const ListWeb = ({ contents, title, url, datetime }) => {
-  console.log(title);
   const date = moment(datetime).format('YYYY-MM-DD HH:mm:ss');
   return (
-    <StyledListWeb>
-      <StyledTitle
+    <List>
+      <Title
         href={url}
         target="_blank"
         rel="noreferrer"
         dangerouslySetInnerHTML={{ __html: title }}
       />
-      <StyledContent dangerouslySetInnerHTML={{ __html: contents }} />
-      <StyledLink href={url} target="_blank" rel="noreferrer">
+      <Content dangerouslySetInnerHTML={{ __html: contents }} />
+      <Link href={url} target="_blank" rel="noreferrer">
         {url}
-      </StyledLink>
+      </Link>
       <div>{date}</div>
-    </StyledListWeb>
+    </List>
   );
 };
 

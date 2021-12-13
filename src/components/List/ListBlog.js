@@ -1,8 +1,8 @@
 import React from 'react';
-import styled from 'styled-components';
+import styled, { CommonLink } from '../../style';
 import moment from 'moment';
 
-const StyledListBlog = styled.li`
+const List = styled.li`
   display: flex;
   padding: 1em 1em;
   border-bottom: 1px solid #dedede;
@@ -10,74 +10,74 @@ const StyledListBlog = styled.li`
   align-items: flex-start;
 `;
 
-const StyledThumbs = styled.a`
+const Thumb = styled.a`
   width: 140px;
   padding: 4px;
   border: 1px solid #03378a;
 `;
 
-const StyledContent = styled.div`
+const ContentWrap = styled.div`
   width: calc(100% - 140px);
   padding-left: 1.5em;
-  .title {
-    font-size: 1.25em;
-    color: #03378a;
-    margin-bottom: 0.5em;
-    display: inline-block;
-  }
-  .content {
-    font-size: 1em;
-    line-height: 1.25;
-    color: #777;
-    margin-bottom: 0.75em;
-  }
-  .name {
-    font-size: 1em;
-    color: #03378a;
-    margin-bottom: 0.325em;
-    display: inline-block;
-  }
-  .link {
-    font-size: 1em;
-    color: #03378a;
-    margin-bottom: 0.325em;
-    display: inline-block;
-  }
-  .dt {
-    font-size: 0.875em;
-    color: #999;
-  }
+`;
+
+const Title = styled.a`
+  font-size: 1.25em;
+  color: #03378a;
+  margin-bottom: 0.5em;
+`;
+
+const Content = styled.p`
+  font-size: 1em;
+  line-height: 1.25;
+  color: #777;
+  margin-bottom: 0.75em;
+`;
+
+const Name = styled.a`
+  font-size: 1em;
+  color: #03378a;
+  margin-bottom: 0.325em;
+  display: inline-block;
+`;
+
+const Link = styled(CommonLink)`
+  font-size: 1em;
+  color: #03378a;
+  margin-bottom: 0.325em;
+  display: inline-block;
+`;
+
+const Date = styled.div`
+  font-size: 0.875em;
+  color: #999;
 `;
 
 const ListBlog = ({ blogname, contents, thumbnail, title, url, datetime }) => {
   const date = moment(datetime).format('YYYY-MM-DD HH:mm:ss');
   return (
-    <StyledListBlog>
-      <StyledThumbs href={url} target="_blank" rel="noreferrer">
+    <List>
+      <Thumb href={url} target="_blank" rel="noreferrer">
         <img src={thumbnail} alt={title} />
-      </StyledThumbs>
-      <StyledContent>
-        <a
+      </Thumb>
+      <ContentWrap>
+        <Title
           href={url}
           target="_blank"
           rel="noreferrer"
-          className="title"
           dangerouslySetInnerHTML={{ __html: title }}
-        ></a>
-        <p
-          className="content"
-          dangerouslySetInnerHTML={{ __html: contents }}
-        ></p>
-        <a className="name" href={url} target="_blank" rel="noreferrer">
+        ></Title>
+        <Content dangerouslySetInnerHTML={{ __html: contents }}></Content>
+        <Name href={url} target="_blank" rel="noreferrer">
           {blogname}
-        </a>{' '}
+        </Name>{' '}
         |{' '}
-        <a href={url} className="link" target="_blank" rel="noreferrer">
+        <Link href={url} target="_blank" rel="noreferrer">
           {url}
-        </a>
-        <div className="dt">{date}</div>
-      </StyledContent>
-    </StyledListBlog>
+        </Link>
+        <Date className="dt">{date}</Date>
+      </ContentWrap>
+    </List>
   );
 };
 
