@@ -62,7 +62,7 @@ function App() {
         onSubmit={onSubmit}
         query={query}
       />
-      <Result />
+      <Result lists={lists} />
       <List lists={lists} category={category} />
     </div>
   );

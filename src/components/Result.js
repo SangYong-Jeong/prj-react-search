@@ -7,10 +7,11 @@ const Wrapper = styled.div`
   font-size: 1em;
 `;
 
-const Result = () => {
+const Result = ({ lists }) => {
+  const totalCount = lists.meta ? lists.meta.pageable_count : '';
   return (
     <Wrapper>
-      검색결과: <span className="font-weight-bold"></span>건
+      검색결과: <span className="font-weight-bold">{totalCount}</span>건
     </Wrapper>
   );
 };

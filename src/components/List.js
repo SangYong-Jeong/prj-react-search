@@ -28,12 +28,13 @@ const StyledLists = styled.ul`
 `;
 
 const List = ({ lists, category }) => {
+  const { meta } = lists;
   const { documents } = lists;
   const { current } = category;
   return (
     <StyledLists current={current}>
       {documents && current === 'web' && (
-        <ListWebContainerCp documents={documents} />
+        <ListWebContainerCp documents={documents} meta={meta} />
       )}
       {documents && current === 'vclip' && (
         <ListVideoContainerCp documents={documents} />
