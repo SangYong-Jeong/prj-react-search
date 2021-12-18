@@ -37,6 +37,24 @@ const Author = styled.a`
   display: inline-block;
 `;
 
+const PlayTime = styled.span`
+  font-size: 1em;
+  color: #03378a;
+  margin-bottom: 0.325em;
+`;
+
+const Link = styled(CommonLink)`
+  font-size: 1em;
+  color: #03378a;
+  margin-bottom: 0.325em;
+  display: inline-block;
+`;
+
+const Date = styled.div`
+  font-size: 0.875em;
+  color: #999;
+`;
+
 const ListVideo = ({ author, play_time, title, url, datetime, thumbnail }) => {
   const date = moment(datetime).format('YYYY-MM-DD HH:mm:ss');
   const playtime = getPlayTime(play_time);
@@ -52,13 +70,13 @@ const ListVideo = ({ author, play_time, title, url, datetime, thumbnail }) => {
         <div>
           <Author href={url} target="_blank" rel="noreferrer">
             {author}
-          </Author>
-          <span>{playtime}</span>
+          </Author>{' '}
+          | <PlayTime>{playtime}</PlayTime>
         </div>
-        <a href={url} target="_blank" rel="noreferrer">
+        <Link href={url} target="_blank" rel="noreferrer">
           {url}
-        </a>
-        <div>{date}</div>
+        </Link>
+        <Date>{date}</Date>
       </ContentWrap>
     </List>
   );

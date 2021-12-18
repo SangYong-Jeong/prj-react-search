@@ -1,5 +1,5 @@
 import React from 'react';
-import styled from 'styled-components';
+import styled, { CommonLink } from '../../style';
 import moment from 'moment';
 
 const ListBook = ({

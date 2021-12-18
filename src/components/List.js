@@ -5,20 +5,25 @@ import ListImg from './List/ListImg';
 import ListBlog from './List/ListBlog';
 import ListBook from './List/ListBook';
 import ListCafe from './List/ListCafe';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 
 const StyledLists = styled.ul`
   border-top: 1px solid #dedede;
   overflow-wrap: break-word;
-  z-index: 2;
+  ${(props) =>
+    props.current === 'image' &&
+    css`
+      z-index: 1;
+      display: flex;
+      flex-wrap: wrap;
+    `}
 `;
 
 const List = ({ lists, category }) => {
   const { documents } = lists;
   const { current } = category;
-  console.log(current);
   return (
-    <StyledLists>
+    <StyledLists current={current}>
       {documents &&
         current === 'web' &&
         documents.map((v, i) => (

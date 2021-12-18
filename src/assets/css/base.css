@@ -73,3 +73,7 @@ a {
 .mw100 {
   max-width: 100%;
 }
+
+body {
+  padding-bottom: 200px;
+}

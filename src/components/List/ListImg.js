@@ -1,6 +1,21 @@
 import React from 'react';
-import styled from 'styled-components';
+import styled from '../../style';
 import moment from 'moment';
+
+const List = styled.li`
+  width: 12.5%;
+  border: 5px solid #fff;
+  cursor: pointer;
+  transition: all 0.5s;
+  :hover {
+    border-color: #548308;
+    transform: scale(1.5);
+    box-shaodw: 0 0 10px rgba(0, 0, 0, 0.4);
+    z-index: 9;
+  }
+`;
+
+const Info = styled.div``;
 
 const ListImg = ({
   collection,
@@ -12,10 +27,10 @@ const ListImg = ({
 }) => {
   const date = moment(datetime).format('YYYY-MM-DD HH:mm:ss');
   return (
-    <li>
-      <img src={thumbnail_url} alt={collection} />
-      <div></div>
-    </li>
+    <List>
+      <img src={thumbnail_url} alt={collection} className="w100" />
+      <Info></Info>
+    </List>
   );
 };
 
