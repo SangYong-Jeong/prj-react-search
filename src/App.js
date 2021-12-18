@@ -1,4 +1,5 @@
-import React, { useState, useCallback, useRef } from 'react';
+import React, { useState, useCallback, useRef, useEffect } from 'react';
+import { useSelector } from 'react-redux';
 
 import Logo from './components/Logo';
 import Form from './components/Form';
@@ -16,9 +17,9 @@ function App() {
   const [cate, setCate] = useState('');
   const [query, setQuery] = useState('');
   const [lists, setLists] = useState({});
-  const [page, setPage] = useState(1);
   let category = useRef('');
   host += `${param}/search/${cate}`;
+  const { page } = useSelector(({ pager }) => pager);
 
   const onChangeCateParam = useCallback(
     (e) => {
@@ -34,103 +35,6 @@ function App() {
     },
     [setQuery]
   );
-
-  const onFirstPage = useCallback(
-    async (e) => {
-      setPage(1);
-      try {
-        const { data } = await axios.get(host, {
-          params: { query, page, size: size[cate] },
-          headers: { Authorization: apiKey },
-        });
-        category.current = cate;
-        setLists(data);
-      } catch (err) {
-        console.log(err);
-      }
-    },
-    [page, cate, host, query]
-  );
-  const onPrevPager = useCallback(
-    async (startPage) => {
-      try {
-        setPage(startPage - 1);
-        const { data } = await axios.get(host, {
-          params: { query, page, size: size[cate] },
-          headers: { Authorization: apiKey },
-        });
-        category.current = cate;
-        setLists(data);
-      } catch (err) {
-        console.log(err);
-      }
-    },
-    [page, cate, host, query]
-  );
-  const onPrevPage = useCallback(
-    async (e) => {
-      try {
-        setPage(page - 1);
-        const { data } = await axios.get(host, {
-          params: { query, page, size: size[cate] },
-          headers: { Authorization: apiKey },
-        });
-        category.current = cate;
-        setLists(data);
-      } catch (err) {
-        console.log(err);
-      }
-    },
-    [page, cate, host, query]
-  );
-  const onChangePage = useCallback(
-    async (i) => {
-      try {
-        setPage(i);
-        const { data } = await axios.get(host, {
-          params: { query, page, size: size[cate] },
-          headers: { Authorization: apiKey },
-        });
-        category.current = cate;
-        setLists(data);
-      } catch (err) {
-        console.log(err);
-      }
-    },
-    [page, cate, host, query]
-  );
-  const onNextPage = useCallback(
-    async (e) => {
-      try {
-        setPage(page + 1);
-        const { data } = await axios.get(host, {
-          params: { query, page, size: size[cate] },
-          headers: { Authorization: apiKey },
-        });
-        category.current = cate;
-        setLists(data);
-      } catch (err) {
-        console.log(err);
-      }
-    },
-    [page, cate, host, query]
-  );
-  const onNextPager = useCallback((e, endPage) => {
-    setPage(endPage + 1);
-  }, []);
-  const onLastPage = useCallback((e, totalPage) => {
-    setPage(totalPage);
-  }, []);
-
-  const changePage = {
-    onFirstPage,
-    onPrevPager,
-    onPrevPage,
-    onChangePage,
-    onNextPage,
-    onNextPager,
-    onLastPage,
-  };
 
   const onSubmit = useCallback(
     async (e) => {
@@ -151,7 +55,7 @@ function App() {
     },
     [host, query, cate, category, page]
   );
-  console.log(lists);
+
   return (
     <div className="container">
       <Logo />
@@ -162,13 +66,7 @@ function App() {
         query={query}
       />
       <Result lists={lists} />
-      <List
-        page={page}
-        setPage={setPage}
-        lists={lists}
-        category={category}
-        changePage={changePage}
-      />
+      <List lists={lists} category={category} />
     </div>
   );
 }
