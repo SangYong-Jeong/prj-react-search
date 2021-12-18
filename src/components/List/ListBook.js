@@ -7,7 +7,7 @@ const List = styled.li`
   width: 50%;
   padding: 2em;
   border-bottom: 1px solid #dedede;
-  ::nth-of-type(odd) {
+  :nth-of-type(odd) {
     border-right: 1px solid #dedede;
   }
 `;
@@ -81,6 +81,9 @@ const Date = styled.div`
 const Content = styled.a`
   color: #444;
   line-height: 1.25;
+  &:hover {
+    color: inherit;
+  }
 `;
 
 const ListBook = ({
@@ -91,6 +94,7 @@ const ListBook = ({
   translators,
   price,
   sale_price,
+  status,
   publisher,
   isbn,
   datetime,
@@ -129,14 +133,16 @@ const ListBook = ({
                 ? numeral(sale_price).format('0,0')
                 : '판매중지'}
             </SalePrice>
-            <Status></Status>
+            {status && <Status>{`[${status}]`}</Status>}
           </Prices>
-          <Publisher></Publisher>
-          <Isbn></Isbn>
-          <Date></Date>
+          <Publisher>{publisher}</Publisher>
+          <Isbn>{isb}</Isbn>
+          <Date>{date}</Date>
         </InfoWp>
       </InfoWrap>
-      <Content></Content>
+      <Content href={url} target="_blank" rel="noreferrer">
+        {contents}
+      </Content>
     </List>
   );
 };
