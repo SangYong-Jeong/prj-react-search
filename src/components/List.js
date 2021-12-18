@@ -27,14 +27,20 @@ const StyledLists = styled.ul`
     `}
 `;
 
-const List = ({ lists, category }) => {
+const List = ({ lists, category, changePage, page, setPage }) => {
   const { meta } = lists;
   const { documents } = lists;
   const { current } = category;
   return (
     <StyledLists current={current}>
       {documents && current === 'web' && (
-        <ListWebContainerCp documents={documents} meta={meta} />
+        <ListWebContainerCp
+          documents={documents}
+          meta={meta}
+          changePage={changePage}
+          page={page}
+          setPage={setPage}
+        />
       )}
       {documents && current === 'vclip' && (
         <ListVideoContainerCp documents={documents} />
@@ -43,13 +49,28 @@ const List = ({ lists, category }) => {
         <ListImgContainerCp documents={documents} />
       )}
       {documents && current === 'blog' && (
-        <ListBlogContainerCp documents={documents} />
+        <ListBlogContainerCp
+          documents={documents}
+          changePage={changePage}
+          page={page}
+          setPage={setPage}
+        />
       )}
       {documents && current === 'book' && (
-        <ListBookContainerCp documents={documents} />
+        <ListBookContainerCp
+          documents={documents}
+          changePage={changePage}
+          page={page}
+          setPage={setPage}
+        />
       )}
       {documents && current === 'cafe' && (
-        <ListCafeContainerCp documents={documents} />
+        <ListCafeContainerCp
+          documents={documents}
+          changePage={changePage}
+          page={page}
+          setPage={setPage}
+        />
       )}
     </StyledLists>
   );

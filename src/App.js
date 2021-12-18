@@ -8,6 +8,7 @@ import List from './components/List';
 import axios from 'axios';
 
 const apiKey = 'KakaoAK 4545d096ee04bdcea13013e722fa668f';
+const size = { web: 10, blog: 10, book: 10, cafe: 10, vclip: 15, image: 80 };
 
 function App() {
   let host = 'https://dapi.kakao.com/';
@@ -15,6 +16,7 @@ function App() {
   const [cate, setCate] = useState('');
   const [query, setQuery] = useState('');
   const [lists, setLists] = useState({});
+  const [page, setPage] = useState(1);
   let category = useRef('');
   host += `${param}/search/${cate}`;
 
@@ -33,6 +35,103 @@ function App() {
     [setQuery]
   );
 
+  const onFirstPage = useCallback(
+    async (e) => {
+      setPage(1);
+      try {
+        const { data } = await axios.get(host, {
+          params: { query, page, size: size[cate] },
+          headers: { Authorization: apiKey },
+        });
+        category.current = cate;
+        setLists(data);
+      } catch (err) {
+        console.log(err);
+      }
+    },
+    [page, cate, host, query]
+  );
+  const onPrevPager = useCallback(
+    async (startPage) => {
+      try {
+        setPage(startPage - 1);
+        const { data } = await axios.get(host, {
+          params: { query, page, size: size[cate] },
+          headers: { Authorization: apiKey },
+        });
+        category.current = cate;
+        setLists(data);
+      } catch (err) {
+        console.log(err);
+      }
+    },
+    [page, cate, host, query]
+  );
+  const onPrevPage = useCallback(
+    async (e) => {
+      try {
+        setPage(page - 1);
+        const { data } = await axios.get(host, {
+          params: { query, page, size: size[cate] },
+          headers: { Authorization: apiKey },
+        });
+        category.current = cate;
+        setLists(data);
+      } catch (err) {
+        console.log(err);
+      }
+    },
+    [page, cate, host, query]
+  );
+  const onChangePage = useCallback(
+    async (i) => {
+      try {
+        setPage(i);
+        const { data } = await axios.get(host, {
+          params: { query, page, size: size[cate] },
+          headers: { Authorization: apiKey },
+        });
+        category.current = cate;
+        setLists(data);
+      } catch (err) {
+        console.log(err);
+      }
+    },
+    [page, cate, host, query]
+  );
+  const onNextPage = useCallback(
+    async (e) => {
+      try {
+        setPage(page + 1);
+        const { data } = await axios.get(host, {
+          params: { query, page, size: size[cate] },
+          headers: { Authorization: apiKey },
+        });
+        category.current = cate;
+        setLists(data);
+      } catch (err) {
+        console.log(err);
+      }
+    },
+    [page, cate, host, query]
+  );
+  const onNextPager = useCallback((e, endPage) => {
+    setPage(endPage + 1);
+  }, []);
+  const onLastPage = useCallback((e, totalPage) => {
+    setPage(totalPage);
+  }, []);
+
+  const changePage = {
+    onFirstPage,
+    onPrevPager,
+    onPrevPage,
+    onChangePage,
+    onNextPage,
+    onNextPager,
+    onLastPage,
+  };
+
   const onSubmit = useCallback(
     async (e) => {
       try {
@@ -40,7 +139,7 @@ function App() {
         if (cate && query) {
           console.log(host);
           const { data } = await axios.get(host, {
-            params: { query },
+            params: { query, page, size: size[cate] },
             headers: { Authorization: apiKey },
           });
           category.current = cate;
@@ -50,7 +149,7 @@ function App() {
         console.log(err);
       }
     },
-    [host, query, cate, category]
+    [host, query, cate, category, page]
   );
   console.log(lists);
   return (
@@ -63,7 +162,13 @@ function App() {
         query={query}
       />
       <Result lists={lists} />
-      <List lists={lists} category={category} />
+      <List
+        page={page}
+        setPage={setPage}
+        lists={lists}
+        category={category}
+        changePage={changePage}
+      />
     </div>
   );
 }

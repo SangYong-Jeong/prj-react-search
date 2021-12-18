@@ -42,8 +42,18 @@ const Page = styled(Button)`
       : ''}
 `;
 
-const PagerCp = ({ pageCount }) => {
-  const [page, setPage] = useState(1);
+const PagerCp = ({
+  page,
+  setPage,
+  pageCount,
+  onFirstPage,
+  onPrevPager,
+  onPrevPage,
+  onChangePage,
+  onNextPage,
+  onNextPager,
+  onLastPage,
+}) => {
   let totalPage = Math.ceil(pageCount / 10); // 총 페이지수
   if (totalPage > 50) totalPage = 50;
   if (page > totalPage) setPage(totalPage);
@@ -57,25 +67,44 @@ const PagerCp = ({ pageCount }) => {
   for (let i = startPage; i <= endPage; i++) {
     pageArr.push(i);
   }
+  console.log(onFirstPage);
   return (
     <PagerWrapper>
-      <FirstPager className="fa fa-arrow-left" disabled={page === 1} />
+      <FirstPager
+        className="fa fa-arrow-left"
+        disabled={page === 1}
+        onClick={onFirstPage}
+      />
       <PagerPrev
         className="fa fa-angle-double-left"
         disabled={startPage === 1}
+        onClick={() => onPrevPager(startPage)}
       />
-      <Prev className="fa fa-angle-left" disabled={page === 1} />
+      <Prev
+        className="fa fa-angle-left"
+        disabled={page === 1}
+        onClick={onPrevPage}
+      />
       {pageArr.map((i) => (
-        <Page key={i} page={page} i={i}>
+        <Page key={i} page={page} i={i} onClick={() => onChangePage(i)}>
           {i}
         </Page>
       ))}
-      <Next className="fa fa-angle-right" disabled={page === totalPage} />
+      <Next
+        className="fa fa-angle-right"
+        disabled={page === totalPage}
+        onClick={onNextPage}
+      />
       <PagerNext
         className="fa fa-angle-double-right"
         disabled={endPage === totalPage}
+        onClick={onNextPager}
       />
-      <LastPager className="fa fa-arrow-right" disabled={page === totalPage} />
+      <LastPager
+        className="fa fa-arrow-right"
+        disabled={page === totalPage}
+        onClick={onLastPage}
+      />
     </PagerWrapper>
   );
 };

@@ -3,7 +3,7 @@ import React from 'react';
 import ListWeb from '../components/List/ListWeb';
 import PagerCp from '../components/pagination/PagerCp';
 
-const ListWebContainerCp = ({ documents, meta }) => {
+const ListWebContainerCp = ({ documents, meta, changePage, page, setPage }) => {
   const { pageable_count } = meta;
   return (
     <>
@@ -16,7 +16,12 @@ const ListWebContainerCp = ({ documents, meta }) => {
           datetime={document.datetime}
         />
       ))}
-      <PagerCp pageCount={pageable_count} />
+      <PagerCp
+        pageCount={pageable_count}
+        {...changePage}
+        page={page}
+        setPage={setPage}
+      />
     </>
   );
 };
