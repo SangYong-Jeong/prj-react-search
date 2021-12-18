@@ -38,6 +38,7 @@ function App() {
       try {
         e.preventDefault();
         if (cate && query) {
+          console.log(host);
           const { data } = await axios.get(host, {
             params: { query },
             headers: { Authorization: apiKey },

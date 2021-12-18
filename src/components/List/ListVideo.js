@@ -61,7 +61,13 @@ const ListVideo = ({ author, play_time, title, url, datetime, thumbnail }) => {
   return (
     <List>
       <Thumb href={url} target="_blank" rel="noreferrer">
-        <img src={thumbnail} alt={title} className="w100" />
+        <img
+          src={
+            thumbnail || 'https://via.placeholder.com/138X78/eee?text=No+image'
+          }
+          alt={title}
+          className="w100"
+        />
       </Thumb>
       <ContentWrap>
         <Title href={url} target="_blank" rel="noreferrer">

@@ -58,7 +58,10 @@ const ListBlog = ({ blogname, contents, thumbnail, title, url, datetime }) => {
   return (
     <List>
       <Thumb href={url} target="_blank" rel="noreferrer">
-        <img src={thumbnail} alt={title} />
+        <img
+          src={thumbnail || 'https://via.placeholder.com/130/eee?text=No+image'}
+          alt={title}
+        />
       </Thumb>
       <ContentWrap>
         <Title

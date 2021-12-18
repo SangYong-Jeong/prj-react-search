@@ -60,7 +60,7 @@ const ListCafe = ({ cafename, contents, datetime, thumbnail, url }) => {
     <List>
       <Thumb href={url} target="_blank" rel="noreferrer">
         <img
-          src={thumbnail || 'https://via.placeholder.com/130'}
+          src={thumbnail || 'https://via.placeholder.com/130/eee?text=No+image'}
           alt={cafename}
           className="w100"
         />
