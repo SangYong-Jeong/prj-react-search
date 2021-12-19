@@ -18,6 +18,23 @@ export default function ListThunk(type, type2) {
   };
 }
 
+// 위의 모듈이랑 공통적으로 쓸 수 있는지 고민 필요
+export function InfiniteThunk(type) {
+  return (ajax, changePage, page) => async (dispatch) => {
+    try {
+      const { host, apiKey, query, param, cate, size } = ajax;
+      const { data } = await axios.get(host + `${param}/search/${cate}`, {
+        params: { query, page, size: size[cate] },
+        headers: { Authorization: apiKey },
+      });
+      dispatch(type(data));
+      dispatch(changePage(page));
+    } catch (err) {
+      console.log(err);
+    }
+  };
+}
+
 /* info = {
   host: '', - > dotenv로 상수처리 가능
   apiKey: '', -> dotenv로 상수처리 가능

@@ -1,8 +1,13 @@
-import React from 'react';
+import React, { useState, useCallback } from 'react';
 import styled from 'styled-components';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
+import { InView } from 'react-intersection-observer';
+
+import { InfiniteAsync } from '../modules/ajax';
+import { changePage } from '../modules/pager';
 
 import ListVideo from '../components/List/ListVideo';
+import LoadingCp from '../components/Loading/LoadingCp';
 
 const Wrapper = styled.ul`
   border-top: 1px solid #dedede;
@@ -11,8 +16,23 @@ const Wrapper = styled.ul`
 `;
 
 const ListVideoContainerCp = () => {
-  const { list } = useSelector(({ ajax }) => ajax);
-  const { documents } = list;
+  const ajax = useSelector(({ ajax }) => ajax);
+  const { list } = ajax;
+  const { documents, meta } = list;
+  const { page } = useSelector(({ pager }) => pager);
+
+  const dispatch = useDispatch();
+
+  const [isLoading, setIsLoading] = useState(false);
+
+  const onChange = useCallback(
+    (inView, entry) => {
+      inView === true ? setIsLoading(true) : setIsLoading(false);
+      dispatch(InfiniteAsync(ajax, changePage, page + 1));
+    },
+    [ajax, dispatch, page]
+  );
+
   return (
     <Wrapper>
       {documents.map((document, i) => (
@@ -26,6 +46,13 @@ const ListVideoContainerCp = () => {
           datetime={document.datetime}
         />
       ))}
+      <InView
+        style={{ height: '200px' }}
+        threshold={0.6}
+        as="div"
+        onChange={onChange}
+      ></InView>
+      {isLoading && <LoadingCp />}
     </Wrapper>
   );
 };

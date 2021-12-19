@@ -6,6 +6,7 @@ import { changePage } from '../../modules/pager';
 import pagerInit from '../../lib/pager-init';
 
 const PagerWrapper = styled.div`
+  padding-bottom: 200px;
   display: flex;
   justify-content: center;
   margin: 2em 0;

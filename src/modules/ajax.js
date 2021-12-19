@@ -1,11 +1,12 @@
 import { createAction, handleActions } from 'redux-actions';
-import ListThunk from '../lib/ListThunk';
+import ListThunk, { InfiniteThunk } from '../lib/ListThunk';
 
 /* Action Type */
 const CATE = 'ajax/CATE';
 const QUERY = 'ajax/QUERY';
 const PARAM = 'ajax/PARAM';
 const LIST = 'ajax/LIST';
+const INFINITE = 'ajax/INFINITE';
 const NOW = 'ajax/NOW';
 /* Create Action */
 
@@ -16,6 +17,9 @@ export const Now = createAction(NOW, (now) => now);
 // thunk로 처리
 export const List = createAction(LIST, (list) => list);
 export const ListAsync = ListThunk(List, Now);
+
+export const Infinite = createAction(INFINITE, (list) => list);
+export const InfiniteAsync = InfiniteThunk(Infinite);
 
 /* 초기 상태 */
 const initialState = {
@@ -31,7 +35,10 @@ const initialState = {
     cafe: 10,
     vclip: 15,
   },
-  list: {},
+  list: {
+    documents: [],
+    meta: {},
+  },
   now: '',
 };
 
@@ -56,6 +63,14 @@ const ajax = handleActions(
     [LIST]: (state, action) => ({
       ...state,
       list: action.payload,
+    }),
+    [INFINITE]: (state, action) => ({
+      ...state,
+      list: {
+        ...state.list,
+        documents: [...state.list.documents, ...action.payload.documents],
+        meta: { ...action.payload.meta },
+      },
     }),
   },
   initialState
