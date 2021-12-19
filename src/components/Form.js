@@ -1,6 +1,7 @@
 import React, { useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Cate, Param, Query, ListAsync } from '../modules/ajax';
+import { changePage } from '../modules/pager';
 
 const Form = () => {
   const dispatch = useDispatch();
@@ -25,7 +26,7 @@ const Form = () => {
   const onSubmit = useCallback(
     (e) => {
       e.preventDefault();
-      dispatch(ListAsync(ajax));
+      dispatch(ListAsync(ajax, changePage));
     },
     [dispatch, ajax]
   );

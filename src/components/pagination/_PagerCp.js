@@ -1,8 +1,5 @@
-import React, { useCallback } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import React, { useState } from 'react';
 import styled, { css } from '../../style';
-import { changePage } from '../../modules/pager';
-import pagerInit from '../../lib/pager-init';
 
 const PagerWrapper = styled.div`
   display: flex;
@@ -45,59 +42,68 @@ const Page = styled(Button)`
       : ''}
 `;
 
-const PagerCp = () => {
-  const { list } = useSelector(({ ajax }) => ajax);
-  const { page, pagerCnt } = useSelector(({ pager }) => pager);
-  const dispatch = useDispatch();
-  const { totalPage, startPage, endPage, pageArr } = pagerInit(
-    page,
-    pagerCnt,
-    list.meta.pageable_count,
-    dispatch,
-    changePage
-  );
-  const onClick = useCallback((e) => {
-    console.log(e);
-    console.log(e.target);
-    console.log(e.target.dataset.page);
-  }, []);
+const PagerCp = ({
+  page,
+  setPage,
+  pageCount,
+  onFirstPage,
+  onPrevPager,
+  onPrevPage,
+  onChangePage,
+  onNextPage,
+  onNextPager,
+  onLastPage,
+}) => {
+  let totalPage = Math.ceil(pageCount / 10); // 총 페이지수
+  if (totalPage > 50) totalPage = 50;
+  if (page > totalPage) setPage(totalPage);
+  const pagerCnt = 5; // pager에 보여질 페에지 수
+  let startPage = '';
+  let endPage = '';
+  startPage = Math.floor((page - 1) / pagerCnt) * pagerCnt + 1;
+  endPage = startPage + pagerCnt - 1;
+  if (endPage > totalPage) endPage = totalPage;
+  const pageArr = [];
+  for (let i = startPage; i <= endPage; i++) {
+    pageArr.push(i);
+  }
+  console.log(onFirstPage);
   return (
     <PagerWrapper>
       <FirstPager
         className="fa fa-arrow-left"
-        // disabled={page === 1}
-        data-page={1}
-        onClick={onClick}
+        disabled={page === 1}
+        onClick={onFirstPage}
       />
       <PagerPrev
         className="fa fa-angle-double-left"
         disabled={startPage === 1}
-        onClick={onClick}
+        onClick={() => onPrevPager(startPage)}
       />
       <Prev
         className="fa fa-angle-left"
         disabled={page === 1}
-        onClick={onClick}
+        onClick={onPrevPage}
       />
       {pageArr.map((i) => (
-        <Page key={i} page={page} i={i} onClick={onClick}>
+        <Page key={i} page={page} i={i} onClick={() => onChangePage(i)}>
           {i}
         </Page>
       ))}
       <Next
         className="fa fa-angle-right"
         disabled={page === totalPage}
-        onClick={onClick}
+        onClick={onNextPage}
       />
       <PagerNext
         className="fa fa-angle-double-right"
         disabled={endPage === totalPage}
-        onClick={onClick}
+        onClick={onNextPager}
       />
       <LastPager
         className="fa fa-arrow-right"
         disabled={page === totalPage}
-        onClick={onClick}
+        onClick={onLastPage}
       />
     </PagerWrapper>
   );

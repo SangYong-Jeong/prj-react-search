@@ -1,10 +1,13 @@
 import React from 'react';
+import { useSelector } from 'react-redux';
 
 import ListWeb from '../components/List/ListWeb';
 import PagerCp from '../components/pagination/PagerCp';
 
-const ListWebContainerCp = ({ documents, meta, changePage, page, setPage }) => {
-  const { pageable_count } = meta;
+const ListWebContainerCp = () => {
+  const { list } = useSelector(({ ajax }) => ajax);
+  const { documents } = list;
+  console.log(documents);
   return (
     <>
       {documents.map((document, i) => (
@@ -16,12 +19,7 @@ const ListWebContainerCp = ({ documents, meta, changePage, page, setPage }) => {
           datetime={document.datetime}
         />
       ))}
-      <PagerCp
-        pageCount={pageable_count}
-        {...changePage}
-        page={page}
-        setPage={setPage}
-      />
+      <PagerCp />
     </>
   );
 };
