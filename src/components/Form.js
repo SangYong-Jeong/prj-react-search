@@ -26,7 +26,7 @@ const Form = () => {
   const onSubmit = useCallback(
     (e) => {
       e.preventDefault();
-      dispatch(ListAsync(ajax, changePage));
+      dispatch(ListAsync(ajax, changePage, 1));
     },
     [dispatch, ajax]
   );

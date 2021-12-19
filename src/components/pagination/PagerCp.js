@@ -1,6 +1,7 @@
 import React, { useCallback } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import styled, { css } from '../../style';
+import { ListAsync } from '../../modules/ajax';
 import { changePage } from '../../modules/pager';
 import pagerInit from '../../lib/pager-init';
 
@@ -46,7 +47,8 @@ const Page = styled(Button)`
 `;
 
 const PagerCp = () => {
-  const { list } = useSelector(({ ajax }) => ajax);
+  const ajax = useSelector(({ ajax }) => ajax);
+  const { list } = ajax;
   const { page, pagerCnt } = useSelector(({ pager }) => pager);
   const dispatch = useDispatch();
   const { totalPage, startPage, endPage, pageArr } = pagerInit(
@@ -56,47 +58,53 @@ const PagerCp = () => {
     dispatch,
     changePage
   );
-  const onClick = useCallback((e) => {
-    console.log(e);
-    console.log(e.target);
-    console.log(e.target.dataset.page);
-  }, []);
+  const onClick = useCallback(
+    (e) => {
+      dispatch(ListAsync(ajax, changePage, Number(e.target.dataset.page)));
+    },
+    [dispatch, ajax]
+  );
   return (
     <PagerWrapper>
       <FirstPager
         className="fa fa-arrow-left"
-        // disabled={page === 1}
+        disabled={page === 1}
         data-page={1}
         onClick={onClick}
       />
       <PagerPrev
         className="fa fa-angle-double-left"
         disabled={startPage === 1}
+        data-page={startPage === 1 ? 1 : startPage - 1}
         onClick={onClick}
       />
       <Prev
         className="fa fa-angle-left"
         disabled={page === 1}
+        data-page={page === 1 ? 1 : page - 1}
         onClick={onClick}
       />
       {pageArr.map((i) => (
-        <Page key={i} page={page} i={i} onClick={onClick}>
+        <Page key={i} page={page} i={i} data-page={i} onClick={onClick}>
           {i}
         </Page>
       ))}
       <Next
         className="fa fa-angle-right"
         disabled={page === totalPage}
+        data-page={page === totalPage ? totalPage : page + 1}
         onClick={onClick}
       />
       <PagerNext
         className="fa fa-angle-double-right"
         disabled={endPage === totalPage}
+        data-page={page === totalPage ? totalPage : endPage + 1}
         onClick={onClick}
       />
       <LastPager
         className="fa fa-arrow-right"
         disabled={page === totalPage}
+        data-page={totalPage}
         onClick={onClick}
       />
     </PagerWrapper>

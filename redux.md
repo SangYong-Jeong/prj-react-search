@@ -12,3 +12,5 @@
 
 3. dataset에 집어넣고 핸들링 -> dataset에 집어넣은 숫자(page)의 type은 string이
    다 Number로 바꿔줘야함
+
+4. pagination 완료!!

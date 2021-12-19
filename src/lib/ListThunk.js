@@ -1,16 +1,16 @@
 import axios from 'axios';
 
-// 여기서 info는 객체
+// 여기서 info는 객체 -> Form, PagerCp 공통적으로 쓰기
 export default function ListThunk(type) {
-  return (ajax, changePage) => async (dispatch) => {
+  return (ajax, changePage, page) => async (dispatch) => {
     try {
       const { host, apiKey, query, param, cate, size } = ajax;
       const { data } = await axios.get(host + `${param}/search/${cate}`, {
-        params: { query, page: 1, size: size[cate] },
+        params: { query, page, size: size[cate] },
         headers: { Authorization: apiKey },
       });
       dispatch(type(data));
-      dispatch(changePage(1));
+      dispatch(changePage(page));
     } catch (err) {
       console.log(err);
     }
