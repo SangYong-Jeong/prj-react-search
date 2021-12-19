@@ -42,4 +42,4 @@ const ListBookContainerCp = () => {
   );
 };
 
-export default ListBookContainerCp;
+export default React.memeo(ListBookContainerCp);

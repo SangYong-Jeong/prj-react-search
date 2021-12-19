@@ -33,4 +33,4 @@ const ListCafeContainerCp = () => {
   );
 };
 
-export default ListCafeContainerCp;
+export default React.memo(ListCafeContainerCp);

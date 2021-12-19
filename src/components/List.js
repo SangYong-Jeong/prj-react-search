@@ -1,5 +1,4 @@
 import React from 'react';
-import styled, { css } from 'styled-components';
 import { useSelector } from 'react-redux';
 
 import ListWebContainerCp from '../containers/ListWebContainerCp';
@@ -24,4 +23,4 @@ const List = () => {
   );
 };
 
-export default List;
+export default React.memo(List);

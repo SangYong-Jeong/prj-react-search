@@ -34,4 +34,4 @@ const ListImg = ({
   );
 };
 
-export default ListImg;
+export default React.memo(ListImg);

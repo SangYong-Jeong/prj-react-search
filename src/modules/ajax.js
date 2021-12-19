@@ -8,6 +8,7 @@ const PARAM = 'ajax/PARAM';
 const LIST = 'ajax/LIST';
 const INFINITE = 'ajax/INFINITE';
 const NOW = 'ajax/NOW';
+const ERROR = 'ajax/ERROR';
 /* Create Action */
 
 export const Cate = createAction(CATE, (cate) => cate);
@@ -19,7 +20,8 @@ export const List = createAction(LIST, (list) => list);
 export const ListAsync = ListThunk(List, Now);
 
 export const Infinite = createAction(INFINITE, (list) => list);
-export const InfiniteAsync = InfiniteThunk(Infinite);
+export const Error = createAction(ERROR, (error) => error);
+export const InfiniteAsync = InfiniteThunk(Infinite, Error);
 
 /* 초기 상태 */
 const initialState = {
@@ -40,6 +42,7 @@ const initialState = {
     meta: {},
   },
   now: '',
+  error: false,
 };
 
 const ajax = handleActions(
@@ -59,6 +62,7 @@ const ajax = handleActions(
     [NOW]: (state, action) => ({
       ...state,
       now: action.payload,
+      error: false,
     }),
     [LIST]: (state, action) => ({
       ...state,
@@ -71,6 +75,10 @@ const ajax = handleActions(
         documents: [...state.list.documents, ...action.payload.documents],
         meta: { ...action.payload.meta },
       },
+    }),
+    [ERROR]: (state, action) => ({
+      ...state,
+      error: action.payload,
     }),
   },
   initialState

@@ -32,4 +32,4 @@ const ListWebContainerCp = () => {
   );
 };
 
-export default ListWebContainerCp;
+export default React.memo(ListWebContainerCp);

@@ -1,5 +1,5 @@
 import React from 'react';
-import styled, { CommonLink } from '../../style';
+import styled from '../../style';
 import moment from 'moment';
 import numeral from 'numeral';
 
@@ -147,4 +147,4 @@ const ListBook = ({
   );
 };
 
-export default ListBook;
+export default React.memeo(ListBook);

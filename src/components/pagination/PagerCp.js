@@ -112,4 +112,4 @@ const PagerCp = () => {
   );
 };
 
-export default PagerCp;
+export default React.memo(PagerCp);

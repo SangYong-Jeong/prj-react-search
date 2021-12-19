@@ -34,4 +34,4 @@ const ListBlogContainerCp = () => {
   );
 };
 
-export default ListBlogContainerCp;
+export default React.memo(ListBlogContainerCp);

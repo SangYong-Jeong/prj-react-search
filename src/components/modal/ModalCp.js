@@ -90,4 +90,4 @@ const ModalCp = () => {
   );
 };
 
-export default ModalCp;
+export default React.memo(ModalCp);

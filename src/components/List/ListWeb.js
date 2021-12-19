@@ -49,4 +49,4 @@ const ListWeb = ({ contents, title, url, datetime }) => {
   );
 };
 
-export default ListWeb;
+export default React.memo(ListWeb);

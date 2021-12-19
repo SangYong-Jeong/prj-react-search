@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useEffect } from 'react';
+import React, { useState, useCallback } from 'react';
 import styled from 'styled-components';
 import { useSelector, useDispatch } from 'react-redux';
 import { InView } from 'react-intersection-observer';
@@ -15,6 +15,7 @@ const Wrapper = styled.ul`
   z-index: 1;
   display: flex;
   flex-wrap: wrap;
+  padding-bottom: 100px;
 `;
 
 const ListImgContainerCp = () => {
@@ -60,4 +61,4 @@ const ListImgContainerCp = () => {
   );
 };
 
-export default ListImgContainerCp;
+export default React.memo(ListImgContainerCp);

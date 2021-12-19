@@ -84,4 +84,4 @@ const ListBlog = ({ blogname, contents, thumbnail, title, url, datetime }) => {
   );
 };
 
-export default ListBlog;
+export default React.memo(ListBlog);

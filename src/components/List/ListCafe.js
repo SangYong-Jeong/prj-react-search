@@ -80,4 +80,4 @@ const ListCafe = ({ cafename, contents, datetime, thumbnail, url }) => {
   );
 };
 
-export default ListCafe;
+export default React.memo(ListCafe);
