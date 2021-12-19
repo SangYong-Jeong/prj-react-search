@@ -8,6 +8,7 @@ import { changePage } from '../modules/pager';
 
 import ListImg from '../components/List/ListImg';
 import LoadingCp from '../components/Loading/LoadingCp';
+import ModalCp from '../components/modal/ModalCp';
 
 const Wrapper = styled.ul`
   border-top: 1px solid #dedede;
@@ -19,6 +20,7 @@ const Wrapper = styled.ul`
 `;
 
 const ListImgContainerCp = () => {
+  const { isShow } = useSelector(({ modal }) => modal);
   const ajax = useSelector(({ ajax }) => ajax);
   const { list } = ajax;
   const { documents, meta } = list;
@@ -36,28 +38,23 @@ const ListImgContainerCp = () => {
     [ajax, dispatch, page]
   );
   return (
-    <Wrapper>
-      {documents.map((document, i) => (
-        <ListImg
-          key={i}
-          collection={document.collection}
-          display_sitename={document.display_sitename}
-          doc_url={document.doc_url}
-          image_url={document.image_url}
-          thumbnail_url={document.thumbnail_url}
-          datetime={document.datetime}
-        />
-      ))}
-      {meta.is_end === false && (
-        <InView
-          style={{ height: '200px' }}
-          threshold={0.6}
-          as="div"
-          onChange={onChange}
-        ></InView>
-      )}
-      {isLoading && <LoadingCp />}
-    </Wrapper>
+    <>
+      <Wrapper>
+        {documents.map((document, i) => (
+          <ListImg key={i} {...document} />
+        ))}
+        {meta.is_end === false && (
+          <InView
+            style={{ height: '200px' }}
+            threshold={0.6}
+            as="div"
+            onChange={onChange}
+          ></InView>
+        )}
+        {isLoading && <LoadingCp />}
+      </Wrapper>
+      {isShow && <ModalCp />}
+    </>
   );
 };
 

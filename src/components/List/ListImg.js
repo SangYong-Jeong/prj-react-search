@@ -1,6 +1,8 @@
-import React from 'react';
+import React, { useCallback } from 'react';
+import { useDispatch } from 'react-redux';
+import { show } from '../../modules/modal';
+
 import styled from '../../style';
-import moment from 'moment';
 
 const List = styled.li`
   width: 12.5%;
@@ -17,18 +19,16 @@ const List = styled.li`
 
 const Info = styled.div``;
 
-const ListImg = ({
-  collection,
-  display_sitename,
-  doc_url,
-  image_url,
-  thumbnail_url,
-  datetime,
-}) => {
-  const date = moment(datetime).format('YYYY-MM-DD HH:mm:ss');
+const ListImg = (props) => {
+  const dispatch = useDispatch();
+
+  const onClick = useCallback(() => {
+    dispatch(show(props));
+  }, [dispatch, props]);
+
   return (
-    <List>
-      <img src={thumbnail_url} alt={collection} className="w100" />
+    <List onClick={onClick}>
+      <img src={props.thumbnail_url} alt={props.collection} className="w100" />
       <Info></Info>
     </List>
   );

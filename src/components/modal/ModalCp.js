@@ -1,5 +1,9 @@
-import React from 'react';
+import React, { useCallback } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import styled from '../../style';
+import moment from 'moment';
+
+import { close } from '../../modules/modal';
 
 const ModalWrapper = styled.div`
   position: fixed;
@@ -28,15 +32,15 @@ const Img = styled.img`
 `;
 
 const Close = styled.i`
-  postion: absolute;
+  position: absolute;
   background-color: rgba(255, 0, 0, 0.7);
   color: #fff;
-  widht: 40px;
+  width: 40px;
   height: 40px;
   font-size: 24px;
   text-align: center;
   line-height: 40px;
-  curosr: pointer;
+  cursor: pointer;
 `;
 
 const SizeWrap = styled.div`
@@ -69,22 +73,41 @@ const Date = styled.div`
 `;
 
 const ModalCp = () => {
+  const dispatch = useDispatch();
+  const { img } = useSelector(({ modal }) => modal);
+
+  const onClick = useCallback(() => {
+    dispatch(close());
+  }, [dispatch]);
+
+  const onError = useCallback(
+    (e) => {
+      e.target.src = img.thumbnail_url;
+    },
+    [img]
+  );
+
   return (
     <ModalWrapper>
       <ModalWrap>
         <ImgWrap>
-          <Img src="http://via.placeholder.com/100" className="w100" />
-          <Close className="fa fa-times" />
+          <Img
+            src={img.image_url}
+            alt={img.image_url}
+            className="w100"
+            onError={onError}
+          />
+          <Close className="fa fa-times" onClick={onClick} />
         </ImgWrap>
         <div className="p-3">
-          <SizeWrap className="mb-2"></SizeWrap>
+          <SizeWrap className="mb-2">{img.width + ' x ' + img.height}</SizeWrap>
           <NameWrap className="mb-2">
-            <Collection></Collection>
-            <Name></Name>
+            <Collection>{`[${img.collection}]`}</Collection>
+            <Name>{img.display_sitename}</Name>
           </NameWrap>
         </div>
-        <Link className="mb-2" traget="_blank"></Link>
-        <Date></Date>
+        <Link href={img.doc_url} className="mb-2" traget="_blank"></Link>
+        <Date>{moment(img.datetime).format('YYYY-MM-DD HH:mm:ss')}</Date>
       </ModalWrap>
     </ModalWrapper>
   );
