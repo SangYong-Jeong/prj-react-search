@@ -1,6 +1,35 @@
-import React from 'react';
+import React, { useCallback } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { Cate, Param, Query, ListAsync } from '../modules/ajax';
 
-const Form = ({ onChangeCateParam, onChangeQuery, onSubmit, query }) => {
+const Form = () => {
+  const dispatch = useDispatch();
+  const ajax = useSelector(({ ajax }) => ajax);
+  const { query } = useSelector(({ ajax }) => ajax);
+  const onChangeCateParam = useCallback(
+    (e) => {
+      dispatch(Cate(e.target.value));
+      if (e.target.value === 'book') dispatch(Param('v3'));
+      else dispatch(Param('v2'));
+    },
+    [dispatch]
+  );
+
+  const onChangeQuery = useCallback(
+    (e) => {
+      dispatch(Query(e.target.value));
+    },
+    [dispatch]
+  );
+
+  const onSubmit = useCallback(
+    (e) => {
+      e.preventDefault();
+      dispatch(ListAsync(ajax));
+    },
+    [dispatch, ajax]
+  );
+
   return (
     <form className="form-inline mb-5" onSubmit={onSubmit}>
       <select
