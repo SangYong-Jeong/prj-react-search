@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 // 여기서 info는 객체 -> Form, PagerCp 공통적으로 쓰기
-export default function ListThunk(type) {
+export default function ListThunk(type, type2) {
   return (ajax, changePage, page) => async (dispatch) => {
     try {
       const { host, apiKey, query, param, cate, size } = ajax;
@@ -11,6 +11,7 @@ export default function ListThunk(type) {
       });
       dispatch(type(data));
       dispatch(changePage(page));
+      dispatch(type2(cate));
     } catch (err) {
       console.log(err);
     }

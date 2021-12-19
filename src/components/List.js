@@ -29,17 +29,17 @@ const StyledLists = styled.ul`
 `;
 
 const List = () => {
-  const { list, cate } = useSelector(({ ajax }) => ajax);
+  const { list, now } = useSelector(({ ajax }) => ajax);
   const { documents } = list;
   return (
-    <StyledLists cate={cate}>
-      {documents && cate === 'web' && <ListWebContainerCp />}
-      {documents && cate === 'vclip' && <ListVideoContainerCp />}
-      {documents && cate === 'image' && <ListImgContainerCp />}
-      {documents && cate === 'blog' && <ListBlogContainerCp />}
-      {documents && cate === 'book' && <ListBookContainerCp />}
-      {documents && cate === 'cafe' && <ListCafeContainerCp />}
-    </StyledLists>
+    <>
+      {documents && now === 'web' && <ListWebContainerCp />}
+      {documents && now === 'vclip' && <ListVideoContainerCp />}
+      {documents && now === 'image' && <ListImgContainerCp />}
+      {documents && now === 'blog' && <ListBlogContainerCp />}
+      {documents && now === 'book' && <ListBookContainerCp />}
+      {documents && now === 'cafe' && <ListCafeContainerCp />}
+    </>
   );
 };
 

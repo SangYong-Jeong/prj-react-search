@@ -6,15 +6,16 @@ const CATE = 'ajax/CATE';
 const QUERY = 'ajax/QUERY';
 const PARAM = 'ajax/PARAM';
 const LIST = 'ajax/LIST';
-
+const NOW = 'ajax/NOW';
 /* Create Action */
 
 export const Cate = createAction(CATE, (cate) => cate);
 export const Query = createAction(QUERY, (query) => query);
 export const Param = createAction(PARAM, (param) => param);
+export const Now = createAction(NOW, (now) => now);
 // thunk로 처리
 export const List = createAction(LIST, (list) => list);
-export const ListAsync = ListThunk(List);
+export const ListAsync = ListThunk(List, Now);
 
 /* 초기 상태 */
 const initialState = {
@@ -31,6 +32,7 @@ const initialState = {
     vclip: 15,
   },
   list: {},
+  now: '',
 };
 
 const ajax = handleActions(
@@ -46,6 +48,10 @@ const ajax = handleActions(
     [PARAM]: (state, action) => ({
       ...state,
       param: action.payload,
+    }),
+    [NOW]: (state, action) => ({
+      ...state,
+      now: action.payload,
     }),
     [LIST]: (state, action) => ({
       ...state,
