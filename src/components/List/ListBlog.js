@@ -1,5 +1,5 @@
 import React from 'react';
-import styled, { CommonLink } from '../../style';
+import styled, { CommonLink, media } from '../../style';
 import moment from 'moment';
 
 const List = styled.li`
@@ -14,11 +14,18 @@ const Thumb = styled.a`
   width: 140px;
   padding: 4px;
   border: 1px solid #03378a;
+  @media ${media.sm} {
+    margin-bottom: 1em;
+  }
 `;
 
 const ContentWrap = styled.div`
   width: calc(100% - 140px);
   padding-left: 1.5em;
+  @media ${media.sm} {
+    width: 100%;
+    padding-left: 0;
+  }
 `;
 
 const Title = styled.a`

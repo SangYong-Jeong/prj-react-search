@@ -2,7 +2,7 @@ import React, { useCallback } from 'react';
 import { useDispatch } from 'react-redux';
 import { show } from '../../modules/modal';
 
-import styled from '../../style';
+import styled, { media } from '../../style';
 
 const List = styled.li`
   width: 12.5%;
@@ -14,6 +14,18 @@ const List = styled.li`
     transform: scale(1.5);
     box-shaodw: 0 0 10px rgba(0, 0, 0, 0.4);
     z-index: 9;
+  }
+  @media ${media.lg} {
+    width: 16.6667%;
+  }
+  @media ${media.md} {
+    width: 20%;
+  }
+  @media ${media.sm} {
+    width: 33.3333%;
+  }
+  @media ${media.xs} {
+    width: 50%;
   }
 `;
 

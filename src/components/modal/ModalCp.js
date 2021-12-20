@@ -1,6 +1,6 @@
 import React, { useCallback } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import styled from '../../style';
+import styled, { media } from '../../style';
 import moment from 'moment';
 
 import { close } from '../../modules/modal';
@@ -20,6 +20,9 @@ const ModalWrapper = styled.div`
 
 const ModalWrap = styled.div`
   background-color: #fff;
+  @media ${media.sm} {
+    width: 96%;
+  }
 `;
 
 const ImgWrap = styled.div`
@@ -29,6 +32,10 @@ const ImgWrap = styled.div`
 const Img = styled.img`
   max-height: 60vh;
   max-width: 80vw;
+  @media ${media.sm} {
+    max-height: 60vh;
+    max-width: 100%;
+  }
 `;
 
 const Close = styled.i`
@@ -41,6 +48,9 @@ const Close = styled.i`
   text-align: center;
   line-height: 40px;
   cursor: pointer;
+  @media ${media.sm} {
+    right: 0;
+  }
 `;
 
 const SizeWrap = styled.div`

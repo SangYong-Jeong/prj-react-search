@@ -1,5 +1,5 @@
 import React from 'react';
-import styled from '../../style';
+import styled, { media } from '../../style';
 import moment from 'moment';
 import numeral from 'numeral';
 
@@ -9,6 +9,12 @@ const List = styled.li`
   border-bottom: 1px solid #dedede;
   :nth-of-type(odd) {
     border-right: 1px solid #dedede;
+  }
+  @media ${media.sm} {
+    width: 100%;
+    :nth-of-type(odd) {
+      border-right: none;
+    }
   }
 `;
 

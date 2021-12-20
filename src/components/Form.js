@@ -2,6 +2,19 @@ import React, { useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Cate, Param, Query, ListAsync } from '../modules/ajax';
 import { changePage } from '../modules/pager';
+import styled, { media } from '../style';
+
+const Select = styled.select`
+  @media ${media.xs} {
+    margin-bottom: 1em;
+  }
+`;
+
+const Input = styled.input`
+  @media ${media.xs} {
+    margin-bottom: 1em;
+  }
+`;
 
 const Form = () => {
   const dispatch = useDispatch();
@@ -33,7 +46,7 @@ const Form = () => {
 
   return (
     <form className="form-inline mb-5" onSubmit={onSubmit}>
-      <select
+      <Select
         name="category"
         className="form-control mr-2"
         onChange={onChangeCateParam}
@@ -46,8 +59,8 @@ const Form = () => {
         <option value="blog">블로그</option>
         <option value="book">도서</option>
         <option value="cafe">카페</option>
-      </select>
-      <input
+      </Select>
+      <Input
         type="text"
         className="form-control mr-2 flex-grow-1"
         name="query"
